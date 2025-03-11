@@ -1,0 +1,7 @@
+ipykernel
+pandas
+pyYAML
+python-box
+types-PyYAML
+psycopg2
+python-dotenv
