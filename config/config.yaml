@@ -1,3 +1,10 @@
 etl:
   raw_data_dir: RAWDATA/RAWDATA.csv
   table_name: customer_data
+
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  ingested_dir: artifacts/data_ingestion/ingested
+  table_name: customer_data
