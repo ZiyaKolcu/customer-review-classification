@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import psycopg2
 from CustomerReviewClassification.exception.exception import CustomException
+from CustomerReviewClassification.logging.logger import logging
 from CustomerReviewClassification.entity.config_entity import ETL_Config
 from io import StringIO
 from dotenv import load_dotenv
@@ -29,6 +30,7 @@ class ETL:
                 password=os.getenv("POSTGRES_PASSWORD"),
             )
             self.cur = self.conn.cursor()
+            logging.info("Connected to the db")
         except Exception as e:
             raise CustomException(e, sys)
 
@@ -45,11 +47,13 @@ class ETL:
         """
         self.cur.execute(create_table_query)
         self.conn.commit()
+        logging.info("Created table")
 
     def etl(self):
         df = pd.read_csv(self.etl_config.raw_data_dir)
 
         df["label"] = df["label"].replace({1: 0, 2: 1})
+        df.drop("title", axis=1, inplace=True)
 
         self.create_table_if_not_exists(df)
 
@@ -66,6 +70,7 @@ class ETL:
 
         self.cur.copy_expert(sql=sql_query, file=csv_buffer)
 
+        logging.info("Copied data into the db")
         self.conn.commit()
         self.cur.close()
         self.conn.close()
