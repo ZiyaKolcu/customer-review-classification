@@ -5,7 +5,7 @@ from CustomerReviewClassification.components.data_ingestion import DataIngestion
 from CustomerReviewClassification.logging.logger import logging
 
 
-class SVM_Training_Pipeline:
+class LR_Training_Pipeline:
     def __init__(self):
         self.config_manager = ConfigurationManager()
 
