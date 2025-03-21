@@ -20,8 +20,9 @@ from CustomerReviewClassification.pipeline.lr_training_pipeline import (
 if __name__ == "__main__":
     try:
         logging.info(f">>>>> LR Training pipeline started <<<<<")
-        svm_training_pipeline = LR_Training_Pipeline()
-        svm_training_pipeline.initiate_data_ingestion()
+        lr_training_pipeline = LR_Training_Pipeline()
+        lr_training_pipeline.initiate_data_ingestion()
+        lr_training_pipeline.initiate_data_validation()
         logging.info(">>>>> LR Training pipeline completed <<<<<")
 
     except Exception as e:

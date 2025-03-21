@@ -1,0 +1,6 @@
+COLUMNS:
+  label: int64
+  review: object
+
+TARGET_COLUMN:
+  name: label

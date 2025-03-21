@@ -13,3 +13,12 @@ class DataIngestionConfig:
     root_dir: Path
     ingested_dir: Path
     table_name: str
+
+
+@dataclass
+class DataValidationConfig:
+    root_dir: Path
+    train_dir: Path
+    test_dir: Path
+    status_dir: Path
+    all_schema: dict
