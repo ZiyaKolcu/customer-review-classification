@@ -3,7 +3,14 @@ from CustomerReviewClassification.configuration.configuration import (
 )
 from CustomerReviewClassification.components.data_ingestion import DataIngestion
 from CustomerReviewClassification.components.data_validation import DataValidation
+from CustomerReviewClassification.components.data_transformation import (
+    DataTransformation,
+)
+from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
+from pathlib import Path
+import json
+import sys
 
 
 class LR_Training_Pipeline:
@@ -20,3 +27,24 @@ class LR_Training_Pipeline:
         data_validation_config = self.config_manager.get_data_validation_config()
         data_validation = DataValidation(data_validation_config=data_validation_config)
         data_validation.validate_all_columns()
+
+    def initiate_data_transform(self):
+        try:
+            with open(Path("artifacts/data_validation/status.json"), "r") as file:
+                status = json.load(file)
+
+            validation_status = status.get("Validation status")
+            if validation_status == True:
+                data_transform_config = (
+                    self.config_manager.get_data_transformation_config()
+                )
+                data_transform = DataTransformation(
+                    data_transform_config=data_transform_config
+                )
+                data_transform.transform()
+
+            else:
+                raise CustomException("Data schema is not valid", sys)
+
+        except Exception as e:
+            raise CustomException(e, sys)

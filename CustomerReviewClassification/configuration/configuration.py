@@ -2,6 +2,7 @@ from CustomerReviewClassification.entity.config_entity import (
     ETL_Config,
     DataIngestionConfig,
     DataValidationConfig,
+    DataTransformationConfig,
 )
 from CustomerReviewClassification.constants import *
 from CustomerReviewClassification.utils.common import read_yaml, create_directories
@@ -49,3 +50,17 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=config.root_dir,
+            train_dir=config.train_dir,
+            test_dir=config.test_dir,
+            preprocessor_dir=config.preprocessor_dir,
+        )
+
+        return data_transformation_config

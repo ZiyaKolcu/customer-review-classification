@@ -14,3 +14,9 @@ data_validation:
   train_dir: artifacts/data_ingestion/train.csv
   test_dir: artifacts/data_ingestion/test.csv
   status_dir: artifacts/data_validation/status.json
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  train_dir: artifacts/data_ingestion/train.csv
+  test_dir: artifacts/data_ingestion/test.csv 
+  preprocessor_dir: artifacts/data_transformation/preprocessor.joblib

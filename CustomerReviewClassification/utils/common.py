@@ -1,6 +1,7 @@
 import os
 import sys
 import yaml
+import joblib
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -44,3 +45,17 @@ def create_directories(path_to_directories: list, verbose=True):
         os.makedirs(path, exist_ok=True)
         if verbose:
             logging.info(f"created directory at: {path}")
+
+
+def save_bin(data, file_path):
+    """save binary file
+
+    Args:
+        data (Any): data to be saved as binary
+        path (Path): path to binary file
+    """
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, "wb") as file_obj:
+        joblib.dump(data, file_obj)
+
+    logging.info(f"binary file saved at: {file_path}")

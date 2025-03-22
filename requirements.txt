@@ -6,3 +6,4 @@ types-PyYAML
 psycopg2
 python-dotenv
 scikit-learn
+joblib

@@ -22,3 +22,11 @@ class DataValidationConfig:
     test_dir: Path
     status_dir: Path
     all_schema: dict
+
+
+@dataclass
+class DataTransformationConfig:
+    root_dir: Path
+    train_dir: Path
+    test_dir: Path
+    preprocessor_dir: Path
