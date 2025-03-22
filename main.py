@@ -24,6 +24,7 @@ if __name__ == "__main__":
         lr_training_pipeline.initiate_data_ingestion()
         lr_training_pipeline.initiate_data_validation()
         lr_training_pipeline.initiate_data_transform()
+        lr_training_pipeline.initiate_lr_model_training()
         logging.info(">>>>> LR Training pipeline completed <<<<<")
 
     except Exception as e:

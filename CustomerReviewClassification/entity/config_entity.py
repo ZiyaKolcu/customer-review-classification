@@ -30,3 +30,15 @@ class DataTransformationConfig:
     train_dir: Path
     test_dir: Path
     preprocessor_dir: Path
+
+
+@dataclass
+class LR_ModelTrainingConfig:
+    root_dir: Path
+    model_dir: Path
+    X_train_dir: Path
+    y_train_dir: Path
+    solver: str
+    max_iter: int
+    class_weight: str
+    C: int

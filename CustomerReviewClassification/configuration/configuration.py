@@ -3,6 +3,7 @@ from CustomerReviewClassification.entity.config_entity import (
     DataIngestionConfig,
     DataValidationConfig,
     DataTransformationConfig,
+    LR_ModelTrainingConfig,
 )
 from CustomerReviewClassification.constants import *
 from CustomerReviewClassification.utils.common import read_yaml, create_directories
@@ -10,10 +11,14 @@ from CustomerReviewClassification.utils.common import read_yaml, create_director
 
 class ConfigurationManager:
     def __init__(
-        self, config_file_path=CONFIG_FILE_PATH, schema_file_path=SCHEMA_FILE_PATH
+        self,
+        config_file_path=CONFIG_FILE_PATH,
+        schema_file_path=SCHEMA_FILE_PATH,
+        params_file_path=PARAMS_FILE_PATH,
     ):
         self.config = read_yaml(config_file_path)
         self.schema = read_yaml(schema_file_path)
+        self.params = read_yaml(params_file_path)
 
     def get_etl_config(self) -> ETL_Config:
         config = self.config.etl
@@ -64,3 +69,22 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+
+    def get_lr_model_training_config(self) -> LR_ModelTrainingConfig:
+        config = self.config.lr_model_training
+        params = self.params.LogisticRegression
+
+        create_directories([config.root_dir])
+
+        lr_model_training_config = LR_ModelTrainingConfig(
+            root_dir=config.root_dir,
+            model_dir=config.model_dir,
+            X_train_dir=config.X_train_dir,
+            y_train_dir=config.y_train_dir,
+            solver=params.solver,
+            max_iter=params.max_iter,
+            class_weight=params.class_weight,
+            C=params.C,
+        )
+
+        return lr_model_training_config

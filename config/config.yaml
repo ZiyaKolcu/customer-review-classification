@@ -18,5 +18,11 @@ data_validation:
 data_transformation:
   root_dir: artifacts/data_transformation
   train_dir: artifacts/data_ingestion/train.csv
-  test_dir: artifacts/data_ingestion/test.csv 
+  test_dir: artifacts/data_ingestion/test.csv
   preprocessor_dir: artifacts/data_transformation/preprocessor.joblib
+
+lr_model_training:
+  root_dir: artifacts/lr_model_training
+  model_dir: artifacts/lr_model_training/lr_model.joblib
+  X_train_dir: artifacts/data_transformation/X_train.npz
+  y_train_dir: artifacts/data_transformation/y_train.csv
