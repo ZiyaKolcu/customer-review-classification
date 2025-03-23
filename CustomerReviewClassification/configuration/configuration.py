@@ -5,6 +5,7 @@ from CustomerReviewClassification.entity.config_entity import (
     DataValidationConfig,
     DataTransformationConfig,
     LR_ModelTrainingConfig,
+    GBC_ModelTrainingConfig,
     ModelEvaluationConfig,
 )
 from CustomerReviewClassification.constants import *
@@ -81,6 +82,7 @@ class ConfigurationManager:
         lr_model_training_config = LR_ModelTrainingConfig(
             root_dir=config.root_dir,
             model_dir=config.model_dir,
+            del_name=config.model_name,
             X_train_dir=config.X_train_dir,
             y_train_dir=config.y_train_dir,
             solver=params.solver,
@@ -91,10 +93,41 @@ class ConfigurationManager:
 
         return lr_model_training_config
 
-    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+    def get_gbc_model_training_config(self) -> GBC_ModelTrainingConfig:
+        config = self.config.gbc_model_training
+        params = self.params.GradientBoostingClassifier
+
+        create_directories([config.root_dir])
+
+        gbc_model_training_config = GBC_ModelTrainingConfig(
+            root_dir=config.root_dir,
+            model_dir=config.model_dir,
+            model_name=config.model_name,
+            X_train_dir=config.X_train_dir,
+            y_train_dir=config.y_train_dir,
+            n_estimators=params.n_estimators,
+            learning_rate=params.learning_rate,
+            max_depth=params.max_depth,
+            random_state=params.random_state,
+        )
+
+        return gbc_model_training_config
+
+    def get_model_evaluation_config(self, selected_model) -> ModelEvaluationConfig:
         config = self.config.model_evaluation
+        lr_config = self.config.lr_model_training
+        gbc_config = self.config.gbc_model_training
         schema = self.schema.TARGET_COLUMN
-        lr_params = self.params.LogisticRegression
+
+        if selected_model == "LR":
+            params = self.params.LogisticRegression
+            model_dir = lr_config.model_dir
+            model_name = lr_config.model_name
+
+        elif selected_model == "GBC":
+            params = self.params.GradientBoostingClassifier
+            model_dir = gbc_config.model_dir
+            model_name = gbc_config.model_name
 
         create_directories([config.root_dir])
 
@@ -102,11 +135,10 @@ class ConfigurationManager:
             root_dir=config.root_dir,
             X_test_dir=config.X_test_dir,
             y_test_dir=config.y_test_dir,
-            model_dir=config.model_dir,
+            model_dir=model_dir,
             preprocessor_dir=config.preprocessor_dir,
-            model_name=config.model_name,
-            metric_file_dir=config.metric_file_dir,
-            all_params=lr_params,
+            model_name=model_name,
+            all_params=params,
             target_column=schema.name,
             mlflow_uri=os.getenv("MLFLOW_TRACKING_URI"),
         )

@@ -7,7 +7,7 @@ from CustomerReviewClassification.components.data_transformation import (
     DataTransformation,
 )
 from CustomerReviewClassification.components.model_evaluation import ModelEvaluation
-from CustomerReviewClassification.components.lr_model_training import LR_ModelTraining
+from CustomerReviewClassification.components.gbc_model_training import GBC_ModelTraining
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -15,7 +15,7 @@ import json
 import sys
 
 
-class LR_Training_Pipeline:
+class GBC_Training_Pipeline:
     def __init__(self):
         self.config_manager = ConfigurationManager()
 
@@ -51,16 +51,16 @@ class LR_Training_Pipeline:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_lr_model_training(self):
-        lr_model_training_config = self.config_manager.get_lr_model_training_config()
-        lr_model_training = LR_ModelTraining(
-            lr_model_training_config=lr_model_training_config
+    def initiate_gbc_model_training(self):
+        gbc_model_training_config = self.config_manager.get_gbc_model_training_config()
+        gbc_model_training = GBC_ModelTraining(
+            gbc_model_training_config=gbc_model_training_config
         )
-        lr_model_training.train()
+        gbc_model_training.train()
 
     def initiate_model_evaluation(self):
         model_evaluation_config = self.config_manager.get_model_evaluation_config(
-            selected_model="LR"
+            selected_model="GBC"
         )
         model_evaluation = ModelEvaluation(
             model_evaluation_config=model_evaluation_config

@@ -41,9 +41,7 @@ class ModelEvaluation:
         preprocessor = load_bin(self.config.preprocessor_dir)
         logging.info("Loaded preprocessor")
 
-        X_test_processed = preprocessor.transform(
-            X_test.astype(str).values.flatten()
-        )
+        X_test_processed = preprocessor.transform(X_test.astype(str).values.flatten())
         logging.info("Transformed X_test")
 
         mlflow.set_registry_uri(self.config.mlflow_uri)
@@ -61,7 +59,15 @@ class ModelEvaluation:
                 "recall": recall,
                 "f1": f1,
             }
-            save_json(path=Path(self.config.metric_file_dir), data=scores)
+            save_json(
+                path=Path(
+                    self.config.root_dir
+                    + "/"
+                    + self.config.model_name
+                    + "_metrics.json"
+                ),
+                data=scores,
+            )
 
             mlflow.log_params(self.config.all_params)
 
