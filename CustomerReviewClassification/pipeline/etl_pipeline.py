@@ -11,5 +11,5 @@ class ETL_Pipeline:
     def initiate_etl(self):
         config_manager = ConfigurationManager()
         etl_config = config_manager.get_etl_config()
-        etl_obj = ETL(etl_config=etl_config)
-        etl_obj.etl()
+        etl = ETL(etl_config=etl_config)
+        etl.load()

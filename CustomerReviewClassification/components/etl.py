@@ -49,11 +49,18 @@ class ETL:
         self.conn.commit()
         logging.info("Created table")
 
-    def etl(self):
-        df = pd.read_csv(self.etl_config.raw_data_dir)
+    def extract(self) -> pd.DataFrame:
+        return pd.read_csv(self.etl_config.raw_data_dir)
 
+    def transform(self) -> pd.DataFrame:
+        df = self.extract()
         df["label"] = df["label"].replace({1: 0, 2: 1})
         df.drop("title", axis=1, inplace=True)
+
+        return df
+
+    def load(self):
+        df = self.transform()
 
         self.create_table_if_not_exists(df)
 
