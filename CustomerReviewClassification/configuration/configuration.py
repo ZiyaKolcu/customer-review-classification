@@ -1,9 +1,11 @@
+import os
 from CustomerReviewClassification.entity.config_entity import (
     ETL_Config,
     DataIngestionConfig,
     DataValidationConfig,
     DataTransformationConfig,
     LR_ModelTrainingConfig,
+    ModelEvaluationConfig,
 )
 from CustomerReviewClassification.constants import *
 from CustomerReviewClassification.utils.common import read_yaml, create_directories
@@ -88,3 +90,24 @@ class ConfigurationManager:
         )
 
         return lr_model_training_config
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+        schema = self.schema.TARGET_COLUMN
+        lr_params = self.params.LogisticRegression
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            X_test_dir=config.X_test_dir,
+            y_test_dir=config.y_test_dir,
+            model_dir=config.model_dir,
+            preprocessor_dir=config.preprocessor_dir,
+            model_name=config.model_name,
+            metric_file_dir=config.metric_file_dir,
+            all_params=lr_params,
+            target_column=schema.name,
+            mlflow_uri=os.getenv("MLFLOW_TRACKING_URI"),
+        )
+        return model_evaluation_config

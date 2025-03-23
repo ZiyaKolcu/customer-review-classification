@@ -2,6 +2,7 @@ import os
 import sys
 import yaml
 import joblib
+import json
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -59,3 +60,26 @@ def save_bin(data, file_path):
         joblib.dump(data, file_obj)
 
     logging.info(f"binary file saved at: {file_path}")
+
+
+def load_bin(path: Path):
+    """load binary data
+    Args:
+        path (Path): path to binary file
+    Returns:
+        Any: object stored in the file
+    """
+    data = joblib.load(path)
+    logging.info(f"binary file loaded from: {path}")
+    return data
+
+
+def save_json(path: Path, data: dict):
+    """save json data
+    Args:
+        path (Path): path to json file
+        data (dict): data to be saved in json file
+    """
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+    logging.info(f"json file saved at: {path}")

@@ -33,11 +33,11 @@ class DataTransformation:
         y_test = test_data.iloc[:, 0]
 
         preprocessor = self.get_preprocessor()
-        save_bin(data=preprocessor, file_path=self.config.preprocessor_dir)
-
         X_train_processed = preprocessor.fit_transform(
             X_train.astype(str).values.flatten()
         )
+        
+        save_bin(data=preprocessor, file_path=self.config.preprocessor_dir)
         logging.info("X_train transformed")
 
         train_dir = os.path.join(self.config.root_dir, "X_train.npz")

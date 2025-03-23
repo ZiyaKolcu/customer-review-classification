@@ -26,3 +26,12 @@ lr_model_training:
   model_dir: artifacts/lr_model_training/lr_model.joblib
   X_train_dir: artifacts/data_transformation/X_train.npz
   y_train_dir: artifacts/data_transformation/y_train.csv
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  X_test_dir: artifacts/data_transformation/X_test.csv
+  y_test_dir: artifacts/data_transformation/y_test.csv
+  model_dir: artifacts/lr_model_training/lr_model.joblib
+  preprocessor_dir: artifacts/data_transformation/preprocessor.joblib
+  metric_file_dir: artifacts/model_evaluation/metrics.json
+  model_name: LogisticRegression

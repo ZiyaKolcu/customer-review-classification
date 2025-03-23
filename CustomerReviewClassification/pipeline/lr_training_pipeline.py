@@ -6,6 +6,7 @@ from CustomerReviewClassification.components.data_validation import DataValidati
 from CustomerReviewClassification.components.data_transformation import (
     DataTransformation,
 )
+from CustomerReviewClassification.components.model_evaluation import ModelEvaluation
 from CustomerReviewClassification.components.lr_model_training import LR_ModelTraining
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
@@ -56,3 +57,10 @@ class LR_Training_Pipeline:
             lr_model_training_config=lr_model_training_config
         )
         lr_model_training.train()
+
+    def initiate_model_evaluation(self):
+        model_evaluation_config = self.config_manager.get_model_evaluation_config()
+        model_evaluation = ModelEvaluation(
+            model_evaluation_config=model_evaluation_config
+        )
+        model_evaluation.log_into_mlflow()

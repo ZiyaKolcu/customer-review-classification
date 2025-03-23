@@ -42,3 +42,17 @@ class LR_ModelTrainingConfig:
     max_iter: int
     class_weight: str
     C: int
+
+
+@dataclass
+class ModelEvaluationConfig:
+    root_dir: Path
+    X_test_dir: Path
+    y_test_dir: Path
+    model_dir: Path
+    preprocessor_dir: Path
+    model_name: str
+    metric_file_dir: Path
+    all_params: dict
+    target_column: str
+    mlflow_uri: str
