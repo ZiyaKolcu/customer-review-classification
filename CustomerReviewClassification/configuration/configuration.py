@@ -115,7 +115,7 @@ class ConfigurationManager:
         return gbc_model_training_config
 
     def get_sgd_model_training_config(self) -> SGD_ModelTrainingConfig:
-        config = self.config.gbc_model_training
+        config = self.config.sgd_model_training
         params = self.params.SGDClassifier
 
         create_directories([config.root_dir])
@@ -137,6 +137,7 @@ class ConfigurationManager:
         config = self.config.model_evaluation
         lr_config = self.config.lr_model_training
         gbc_config = self.config.gbc_model_training
+        sgd_config = self.config.sgd_model_training
         schema = self.schema.TARGET_COLUMN
 
         if selected_model == "LR":
@@ -151,8 +152,8 @@ class ConfigurationManager:
 
         elif selected_model == "SGD":
             params = self.params.SGDClassifier
-            model_dir = gbc_config.model_dir
-            model_name = gbc_config.model_name
+            model_dir = sgd_config.model_dir
+            model_name = sgd_config.model_name
 
         create_directories([config.root_dir])
 
