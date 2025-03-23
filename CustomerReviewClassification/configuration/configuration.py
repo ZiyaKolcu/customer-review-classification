@@ -6,6 +6,7 @@ from CustomerReviewClassification.entity.config_entity import (
     DataTransformationConfig,
     LR_ModelTrainingConfig,
     GBC_ModelTrainingConfig,
+    SGD_ModelTrainingConfig,
     ModelEvaluationConfig,
 )
 from CustomerReviewClassification.constants import *
@@ -113,6 +114,25 @@ class ConfigurationManager:
 
         return gbc_model_training_config
 
+    def get_sgd_model_training_config(self) -> SGD_ModelTrainingConfig:
+        config = self.config.gbc_model_training
+        params = self.params.SGDClassifier
+
+        create_directories([config.root_dir])
+
+        sgd_model_training_config = SGD_ModelTrainingConfig(
+            root_dir=config.root_dir,
+            model_dir=config.model_dir,
+            model_name=config.model_name,
+            X_train_dir=config.X_train_dir,
+            y_train_dir=config.y_train_dir,
+            loss=params.loss,
+            penalty=params.penalty,
+            max_iter=params.max_iter,
+        )
+
+        return sgd_model_training_config
+
     def get_model_evaluation_config(self, selected_model) -> ModelEvaluationConfig:
         config = self.config.model_evaluation
         lr_config = self.config.lr_model_training
@@ -126,6 +146,11 @@ class ConfigurationManager:
 
         elif selected_model == "GBC":
             params = self.params.GradientBoostingClassifier
+            model_dir = gbc_config.model_dir
+            model_name = gbc_config.model_name
+
+        elif selected_model == "SGD":
+            params = self.params.SGDClassifier
             model_dir = gbc_config.model_dir
             model_name = gbc_config.model_name
 

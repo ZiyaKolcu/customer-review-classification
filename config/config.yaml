@@ -35,6 +35,13 @@ gbc_model_training:
   y_train_dir: artifacts/data_transformation/y_train.csv
   model_name: GradientBoostingClassifier
 
+sgd_model_training:
+  root_dir: artifacts/sgd_model_training
+  model_dir: artifacts/sgd_model_training/sgd_model.joblib
+  X_train_dir: artifacts/data_transformation/X_train.npz
+  y_train_dir: artifacts/data_transformation/y_train.csv
+  model_name: SGDClassifier
+
 model_evaluation:
   root_dir: artifacts/model_evaluation
   X_test_dir: artifacts/data_transformation/X_test.csv

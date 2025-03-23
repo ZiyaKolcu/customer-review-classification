@@ -36,16 +36,16 @@ class DataTransformation:
         X_train_processed = preprocessor.fit_transform(
             X_train.astype(str).values.flatten()
         )
-        
+
         save_bin(data=preprocessor, file_path=self.config.preprocessor_dir)
-        logging.info("X_train transformed")
+        logging.info("Transformed X_train")
 
         train_dir = os.path.join(self.config.root_dir, "X_train.npz")
         save_npz(train_dir, X_train_processed)
-        logging.info("X_train.npz saved")
+        logging.info("Saved X_train.npz")
         X_test.to_csv(os.path.join(self.config.root_dir, "X_test.csv"), index=False)
-        logging.info("X_test.csv saved")
+        logging.info("Saved X_test.csv")
         y_train.to_csv(os.path.join(self.config.root_dir, "y_train.csv"), index=False)
-        logging.info("y_train.csv saved")
+        logging.info("Saved y_train.csv")
         y_test.to_csv(os.path.join(self.config.root_dir, "y_test.csv"), index=False)
-        logging.info("y_test.csv saved")
+        logging.info("Saved y_test.csv")

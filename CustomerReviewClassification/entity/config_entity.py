@@ -59,6 +59,18 @@ class GBC_ModelTrainingConfig:
 
 
 @dataclass
+class SGD_ModelTrainingConfig:
+    root_dir: Path
+    model_dir: Path
+    model_name: str
+    X_train_dir: Path
+    y_train_dir: Path
+    loss: str
+    penalty: str
+    max_iter: int
+
+
+@dataclass
 class ModelEvaluationConfig:
     root_dir: Path
     X_test_dir: Path

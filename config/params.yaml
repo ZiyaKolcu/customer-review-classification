@@ -9,3 +9,8 @@ GradientBoostingClassifier:
   learning_rate: 0.1
   max_depth: 3
   random_state: 42
+
+SGDClassifier:
+  loss: hinge
+  penalty: l2
+  max_iter: 500
