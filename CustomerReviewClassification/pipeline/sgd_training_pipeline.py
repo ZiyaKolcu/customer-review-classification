@@ -7,7 +7,7 @@ from CustomerReviewClassification.components.data_transformation import (
     DataTransformation,
 )
 from CustomerReviewClassification.components.model_evaluation import ModelEvaluation
-from CustomerReviewClassification.components.sgd_model_training import SGD_ModelTraining
+from CustomerReviewClassification.components.model_training import ModelTraining
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -52,11 +52,11 @@ class SGD_Training_Pipeline:
             raise CustomException(e, sys)
 
     def initiate_sgd_model_training(self):
-        sgd_model_training_config = self.config_manager.get_sgd_model_training_config()
-        sgd_model_training = SGD_ModelTraining(
-            sgd_model_training_config=sgd_model_training_config
+        sgd_model_training_config = self.config_manager.get_model_training_config()
+        sgd_model_training = ModelTraining(
+            model_training_config=sgd_model_training_config
         )
-        sgd_model_training.train()
+        sgd_model_training.train("SGD")
 
     def initiate_model_evaluation(self):
         model_evaluation_config = self.config_manager.get_model_evaluation_config(

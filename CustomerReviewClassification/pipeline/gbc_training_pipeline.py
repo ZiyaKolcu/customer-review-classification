@@ -7,7 +7,7 @@ from CustomerReviewClassification.components.data_transformation import (
     DataTransformation,
 )
 from CustomerReviewClassification.components.model_evaluation import ModelEvaluation
-from CustomerReviewClassification.components.gbc_model_training import GBC_ModelTraining
+from CustomerReviewClassification.components.model_training import ModelTraining
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -52,11 +52,11 @@ class GBC_Training_Pipeline:
             raise CustomException(e, sys)
 
     def initiate_gbc_model_training(self):
-        gbc_model_training_config = self.config_manager.get_gbc_model_training_config()
-        gbc_model_training = GBC_ModelTraining(
-            gbc_model_training_config=gbc_model_training_config
+        gbc_model_training_config = self.config_manager.get_model_training_config()
+        gbc_model_training = ModelTraining(
+            model_training_config=gbc_model_training_config
         )
-        gbc_model_training.train()
+        gbc_model_training.train("GBC")
 
     def initiate_model_evaluation(self):
         model_evaluation_config = self.config_manager.get_model_evaluation_config(

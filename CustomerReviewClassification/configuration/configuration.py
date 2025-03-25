@@ -4,9 +4,7 @@ from CustomerReviewClassification.entity.config_entity import (
     DataIngestionConfig,
     DataValidationConfig,
     DataTransformationConfig,
-    LR_ModelTrainingConfig,
-    GBC_ModelTrainingConfig,
-    SGD_ModelTrainingConfig,
+    ModelTrainingConfig,
     ModelEvaluationConfig,
 )
 from CustomerReviewClassification.constants import *
@@ -74,64 +72,19 @@ class ConfigurationManager:
 
         return data_transformation_config
 
-    def get_lr_model_training_config(self) -> LR_ModelTrainingConfig:
-        config = self.config.lr_model_training
-        params = self.params.LogisticRegression
+    def get_model_training_config(self) -> ModelTrainingConfig:
+        config = self.config.model_training
 
         create_directories([config.root_dir])
 
-        lr_model_training_config = LR_ModelTrainingConfig(
+        model_training_config = ModelTrainingConfig(
             root_dir=config.root_dir,
-            model_dir=config.model_dir,
-            del_name=config.model_name,
             X_train_dir=config.X_train_dir,
             y_train_dir=config.y_train_dir,
-            solver=params.solver,
-            max_iter=params.max_iter,
-            class_weight=params.class_weight,
-            C=params.C,
+            params=self.params,
         )
 
-        return lr_model_training_config
-
-    def get_gbc_model_training_config(self) -> GBC_ModelTrainingConfig:
-        config = self.config.gbc_model_training
-        params = self.params.GradientBoostingClassifier
-
-        create_directories([config.root_dir])
-
-        gbc_model_training_config = GBC_ModelTrainingConfig(
-            root_dir=config.root_dir,
-            model_dir=config.model_dir,
-            model_name=config.model_name,
-            X_train_dir=config.X_train_dir,
-            y_train_dir=config.y_train_dir,
-            n_estimators=params.n_estimators,
-            learning_rate=params.learning_rate,
-            max_depth=params.max_depth,
-            random_state=params.random_state,
-        )
-
-        return gbc_model_training_config
-
-    def get_sgd_model_training_config(self) -> SGD_ModelTrainingConfig:
-        config = self.config.sgd_model_training
-        params = self.params.SGDClassifier
-
-        create_directories([config.root_dir])
-
-        sgd_model_training_config = SGD_ModelTrainingConfig(
-            root_dir=config.root_dir,
-            model_dir=config.model_dir,
-            model_name=config.model_name,
-            X_train_dir=config.X_train_dir,
-            y_train_dir=config.y_train_dir,
-            loss=params.loss,
-            penalty=params.penalty,
-            max_iter=params.max_iter,
-        )
-
-        return sgd_model_training_config
+        return model_training_config
 
     def get_model_evaluation_config(self, selected_model) -> ModelEvaluationConfig:
         config = self.config.model_evaluation

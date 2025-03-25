@@ -7,7 +7,7 @@ from CustomerReviewClassification.components.data_transformation import (
     DataTransformation,
 )
 from CustomerReviewClassification.components.model_evaluation import ModelEvaluation
-from CustomerReviewClassification.components.lr_model_training import LR_ModelTraining
+from CustomerReviewClassification.components.model_training import ModelTraining
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.logging.logger import logging
 from pathlib import Path
@@ -52,11 +52,9 @@ class LR_Training_Pipeline:
             raise CustomException(e, sys)
 
     def initiate_lr_model_training(self):
-        lr_model_training_config = self.config_manager.get_lr_model_training_config()
-        lr_model_training = LR_ModelTraining(
-            lr_model_training_config=lr_model_training_config
-        )
-        lr_model_training.train()
+        lr_model_training_config = self.config_manager.get_model_training_config()
+        lr_model_training = ModelTraining(model_training_config=lr_model_training)
+        lr_model_training.train("LR")
 
     def initiate_model_evaluation(self):
         model_evaluation_config = self.config_manager.get_model_evaluation_config(

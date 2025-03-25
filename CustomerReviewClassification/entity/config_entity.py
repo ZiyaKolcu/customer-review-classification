@@ -33,41 +33,11 @@ class DataTransformationConfig:
 
 
 @dataclass
-class LR_ModelTrainingConfig:
+class ModelTrainingConfig:
     root_dir: Path
-    model_dir: Path
-    model_name: str
     X_train_dir: Path
     y_train_dir: Path
-    solver: str
-    max_iter: int
-    class_weight: str
-    C: int
-
-
-@dataclass
-class GBC_ModelTrainingConfig:
-    root_dir: Path
-    model_dir: Path
-    model_name: str
-    X_train_dir: Path
-    y_train_dir: Path
-    n_estimators: int
-    learning_rate: int
-    max_depth: int
-    random_state: int
-
-
-@dataclass
-class SGD_ModelTrainingConfig:
-    root_dir: Path
-    model_dir: Path
-    model_name: str
-    X_train_dir: Path
-    y_train_dir: Path
-    loss: str
-    penalty: str
-    max_iter: int
+    params: dict
 
 
 @dataclass
