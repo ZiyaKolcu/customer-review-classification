@@ -15,8 +15,9 @@ import json
 import sys
 
 
-class GBC_Training_Pipeline:
-    def __init__(self):
+class Training_Pipeline:
+    def __init__(self, model_name: str):
+        self.model_name = model_name
         self.config_manager = ConfigurationManager()
 
     def initiate_data_ingestion(self):
@@ -51,18 +52,16 @@ class GBC_Training_Pipeline:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_gbc_model_training(self):
-        gbc_model_training_config = self.config_manager.get_model_training_config()
-        gbc_model_training = ModelTraining(
-            model_training_config=gbc_model_training_config
+    def initiate_model_training(self):
+        model_training_config = self.config_manager.get_model_training_config()
+        model_training = ModelTraining(
+            model_name=self.model_name, model_training_config=model_training_config
         )
-        gbc_model_training.train("GBC")
+        model_training.train()
 
     def initiate_model_evaluation(self):
-        model_evaluation_config = self.config_manager.get_model_evaluation_config(
-            selected_model="GBC"
-        )
+        model_evaluation_config = self.config_manager.get_model_evaluation_config()
         model_evaluation = ModelEvaluation(
-            model_evaluation_config=model_evaluation_config
+            model_name=self.model_name, model_evaluation_config=model_evaluation_config
         )
         model_evaluation.log_into_mlflow()

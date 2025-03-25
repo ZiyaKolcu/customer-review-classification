@@ -45,9 +45,8 @@ class ModelEvaluationConfig:
     root_dir: Path
     X_test_dir: Path
     y_test_dir: Path
-    model_dir: Path
     preprocessor_dir: Path
-    model_name: str
+    model_dir: Path
     all_params: dict
     target_column: str
     mlflow_uri: str

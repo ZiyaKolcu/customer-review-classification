@@ -10,7 +10,8 @@ import pandas as pd
 
 
 class ModelTraining:
-    def __init__(self, model_training_config: ModelTrainingConfig):
+    def __init__(self, model_name: str, model_training_config: ModelTrainingConfig):
+        self.model_name = model_name
         self.config = model_training_config
         self.lr_params = self.config.params.LogisticRegression
         self.gbc_params = self.config.params.GradientBoostingClassifier
@@ -19,26 +20,26 @@ class ModelTraining:
     def load_data(self):
         X_train = load_npz(self.config.X_train_dir)
         y_train = pd.read_csv(self.config.y_train_dir)
-        logging.info("Loaded X_train and y_train successfully")
+        logging.info("Loaded X_train and y_train")
 
         return X_train, y_train
 
-    def get_model(self, model_name: str):
-        if model_name == "LR":
+    def get_model(self):
+        if self.model_name == "LogisticRegression":
             model = LogisticRegression(
                 solver=self.lr_params.solver,
                 max_iter=self.lr_params.max_iter,
                 class_weight=self.lr_params.class_weight,
                 C=self.lr_params.C,
             )
-        elif model_name == "GBC":
+        elif self.model_name == "GradientBoostingClassifier":
             model = GradientBoostingClassifier(
                 n_estimators=self.gbc_params.n_estimators,
                 learning_rate=self.gbc_params.learning_rate,
                 max_depth=self.gbc_params.max_depth,
                 random_state=self.gbc_params.random_state,
             )
-        elif model_name == "SGD":
+        elif self.model_name == "SGDClassifier":
             model = SGDClassifier(
                 loss=self.sgd_params.loss,
                 penalty=self.sgd_params.penalty,
@@ -46,13 +47,17 @@ class ModelTraining:
             )
         return model
 
-    def train(self, model_name: str):
+    def train(self):
         X_train, y_train = self.load_data()
 
-        model = self.get_model(model_name)
+        model = self.get_model()
 
+        logging.info("Started " + self.model_name + " model fitting process")
         model.fit(X_train, y_train.values.ravel())
+        logging.info("Finished " + self.model_name + " model fitting process")
 
         save_bin(
-            data=model, file_path=self.config.root_dir + f"/{model_name}_model.joblib"
+            data=model,
+            file_path=self.config.root_dir + f"/{self.model_name}_model.joblib",
         )
+        logging.info("Saved " + self.model_name + " model")

@@ -86,27 +86,9 @@ class ConfigurationManager:
 
         return model_training_config
 
-    def get_model_evaluation_config(self, selected_model) -> ModelEvaluationConfig:
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
         config = self.config.model_evaluation
-        lr_config = self.config.lr_model_training
-        gbc_config = self.config.gbc_model_training
-        sgd_config = self.config.sgd_model_training
         schema = self.schema.TARGET_COLUMN
-
-        if selected_model == "LR":
-            params = self.params.LogisticRegression
-            model_dir = lr_config.model_dir
-            model_name = lr_config.model_name
-
-        elif selected_model == "GBC":
-            params = self.params.GradientBoostingClassifier
-            model_dir = gbc_config.model_dir
-            model_name = gbc_config.model_name
-
-        elif selected_model == "SGD":
-            params = self.params.SGDClassifier
-            model_dir = sgd_config.model_dir
-            model_name = sgd_config.model_name
 
         create_directories([config.root_dir])
 
@@ -114,10 +96,9 @@ class ConfigurationManager:
             root_dir=config.root_dir,
             X_test_dir=config.X_test_dir,
             y_test_dir=config.y_test_dir,
-            model_dir=model_dir,
             preprocessor_dir=config.preprocessor_dir,
-            model_name=model_name,
-            all_params=params,
+            model_dir=config.model_dir,
+            all_params=self.params,
             target_column=schema.name,
             mlflow_uri=os.getenv("MLFLOW_TRACKING_URI"),
         )
