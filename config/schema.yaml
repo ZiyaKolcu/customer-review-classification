@@ -4,3 +4,6 @@ COLUMNS:
 
 TARGET_COLUMN:
   name: label
+
+OOV:
+  threshold: 0.5

@@ -22,6 +22,7 @@ class DataValidationConfig:
     test_dir: Path
     status_dir: Path
     all_schema: dict
+    oov_threshold: float
 
 
 @dataclass

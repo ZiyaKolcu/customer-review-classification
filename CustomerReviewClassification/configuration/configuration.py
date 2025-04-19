@@ -44,7 +44,7 @@ class ConfigurationManager:
 
     def get_data_validation_config(self) -> DataValidationConfig:
         config = self.config.data_validation
-        schema = self.schema.COLUMNS
+        schema = self.schema
 
         create_directories([config.root_dir])
 
@@ -53,7 +53,8 @@ class ConfigurationManager:
             train_dir=config.train_dir,
             test_dir=config.test_dir,
             status_dir=config.status_dir,
-            all_schema=schema,
+            all_schema=schema.COLUMNS,
+            oov_threshold=schema.OOV.threshold,
         )
 
         return data_validation_config

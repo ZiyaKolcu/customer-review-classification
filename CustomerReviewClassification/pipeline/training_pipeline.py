@@ -29,7 +29,7 @@ class Training_Pipeline:
     def initiate_data_validation(self):
         data_validation_config = self.config_manager.get_data_validation_config()
         data_validation = DataValidation(data_validation_config=data_validation_config)
-        data_validation.validate_all_columns()
+        data_validation.validate_oov()
 
     def initiate_data_transform(self):
         try:
