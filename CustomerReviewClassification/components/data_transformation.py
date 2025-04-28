@@ -4,9 +4,9 @@ from CustomerReviewClassification.logging.logger import logging
 from CustomerReviewClassification.exception.exception import CustomException
 from CustomerReviewClassification.entity.config_entity import DataTransformationConfig
 from CustomerReviewClassification.utils.common import save_bin
+from CustomerReviewClassification.utils.ml_utils import SpacyTextPreprocessor
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import StandardScaler
 from scipy.sparse import save_npz
 
 
@@ -17,8 +17,11 @@ class DataTransformation:
     def get_preprocessor(self):
         return Pipeline(
             [
-                ("vectorizer", CountVectorizer()),
-                ("scaler", StandardScaler(with_mean=False)),
+                (
+                    "spacy_text_preprocessing",
+                    SpacyTextPreprocessor(),
+                ), 
+                ("vectorization", CountVectorizer()),
             ]
         )
 

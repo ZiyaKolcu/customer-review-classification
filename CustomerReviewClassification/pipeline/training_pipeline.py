@@ -36,7 +36,7 @@ class Training_Pipeline:
             with open(Path("artifacts/data_validation/status.json"), "r") as file:
                 status = json.load(file)
 
-            validation_status = status.get("Validation status")
+            validation_status = status.get("Validation Status")
             if validation_status == True:
                 data_transform_config = (
                     self.config_manager.get_data_transformation_config()
