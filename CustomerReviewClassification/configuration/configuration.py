@@ -6,6 +6,7 @@ from CustomerReviewClassification.entity.config_entity import (
     DataTransformationConfig,
     ModelTrainingConfig,
     ModelEvaluationConfig,
+    ModelPredictionConfig,
 )
 from CustomerReviewClassification.constants import *
 from CustomerReviewClassification.utils.common import read_yaml, create_directories
@@ -104,3 +105,12 @@ class ConfigurationManager:
             mlflow_uri=os.getenv("MLFLOW_TRACKING_URI"),
         )
         return model_evaluation_config
+
+    def get_model_prediction_config(self) -> ModelPredictionConfig:
+        config = self.config.model_prediction
+
+        model_prediction_config = ModelPredictionConfig(
+            model_dir=config.model_dir, preprocessor_dir=config.preprocessor_dir
+        )
+
+        return model_prediction_config

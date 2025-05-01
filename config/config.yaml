@@ -32,3 +32,7 @@ model_evaluation:
   y_test_dir: artifacts/data_transformation/y_test.csv
   preprocessor_dir: artifacts/data_transformation/preprocessor.joblib
   model_dir: artifacts/model_training
+
+model_prediction:
+  model_dir: artifacts/model_training
+  preprocessor_dir: artifacts/data_transformation/preprocessor.joblib
